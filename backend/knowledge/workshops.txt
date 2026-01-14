@@ -1,0 +1,11 @@
+In addition to consulting and tools, Futurelab Studios conducts hands-on AI
+enablement workshops and training programs for individuals, teams, and
+organizations.
+
+These programs are designed to build confidence and practical skills in using
+AI effectively. Sessions focus on real-world use cases, responsible AI practices,
+and guided hands-on learning rather than purely theoretical instruction.
+
+Workshops range from AI essentials for all team members, to deep-dive sessions
+for specific functions such as marketing or sales, and advanced builder programs
+where teams prototype and develop working AI solutions.

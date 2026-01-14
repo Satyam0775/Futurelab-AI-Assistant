@@ -1,0 +1,11 @@
+Futurelab Studios helps organizations adopt AI through a combination of strategic
+consulting, custom-built tools, and structured adoption planning.
+
+Our services focus on applying AI to real business challenges, improving
+productivity, and automating workflows in a way that is practical and usable.
+We prioritize clarity, usability, and real-world impact over theoretical or
+hype-driven solutions.
+
+We also build AI-first tools such as knowledge chatbots, voice-based AI agents,
+and retrieval-augmented systems that integrate smoothly into existing workflows
+and business processes.
