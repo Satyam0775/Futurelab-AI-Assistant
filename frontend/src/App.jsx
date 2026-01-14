@@ -13,6 +13,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
 
+  // ✅ Scroll to bottom on new messages
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
@@ -21,26 +22,39 @@ export default function App() {
     e.preventDefault();
     if (!input.trim() || loading) return;
 
-    const userMsg = {
+    const userMessage = {
       role: "user",
       text: input,
       time: new Date().toLocaleTimeString()
     };
 
-    setMessages(prev => [...prev, userMsg]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/chat", {
+      // ✅ ENV VARIABLE (WORKS ON VERCEL)
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      if (!API_URL) {
+        throw new Error("API URL not configured");
+      }
+
+      const response = await fetch(`${API_URL}/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMsg.text })
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: userMessage.text })
       });
 
-      const data = await res.json();
+      if (!response.ok) {
+        throw new Error("Backend error");
+      }
 
-      setMessages(prev => [
+      const data = await response.json();
+
+      setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
@@ -48,12 +62,13 @@ export default function App() {
           time: new Date().toLocaleTimeString()
         }
       ]);
-    } catch {
-      setMessages(prev => [
+    } catch (error) {
+      setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          text: "Sorry, something went wrong while processing your request.",
+          text:
+            "Sorry, something went wrong while processing your request. Please try again.",
           time: new Date().toLocaleTimeString()
         }
       ]);
@@ -75,10 +90,10 @@ export default function App() {
         </header>
 
         <section className="chat-messages">
-          {messages.map((m, i) => (
-            <div key={i} className={`msg ${m.role}`}>
-              <div className="bubble">{m.text}</div>
-              <div className="time">{m.time}</div>
+          {messages.map((msg, index) => (
+            <div key={index} className={`msg ${msg.role}`}>
+              <div className="bubble">{msg.text}</div>
+              <div className="time">{msg.time}</div>
             </div>
           ))}
 
